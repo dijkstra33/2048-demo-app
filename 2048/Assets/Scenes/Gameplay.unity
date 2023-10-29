@@ -831,6 +831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 1347176999}
+  _travelTime: 0.2
 --- !u!4 &1387886529
 Transform:
   m_ObjectHideFlags: 0

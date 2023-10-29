@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Game
@@ -7,6 +8,9 @@ namespace Game
     {
         [SerializeField]
         private GridManager _gridManager;
+
+        [SerializeField]
+        private float _travelTime;
         
         public void Shift(Vector2 direction)
         {
@@ -17,7 +21,7 @@ namespace Game
                     .ThenBy(b => b.Position.y)
                     .ToArray();
 
-            if (direction.x < 0 || direction.y < 0)
+            if (direction == Vector2.right || direction == Vector2.up)
             {
                 orderedBlocks = orderedBlocks.Reverse().ToArray();
             }
@@ -35,23 +39,30 @@ namespace Game
                             possibleNextNode.occupiedBlock.CanMerge(block.Value))
                         {
                             block.MergeBlock(possibleNextNode.occupiedBlock);
-                        }
-                        if (possibleNextNode.occupiedBlock == null)
+                        } else if (possibleNextNode.occupiedBlock == null)
                         {
                             next = possibleNextNode;
                         }
                     }
                 } while (next != block.node);
+            }
 
-                block.transform.position = block.node.Position;
-            }
-            
-            foreach (var block in orderedBlocks.Where(b => b.mergingBlock != null))
+            var sequence = DOTween.Sequence();
+            foreach (var block in orderedBlocks)
             {
-                MergeBlocks(block, block.mergingBlock);
+                var movePoint = block.mergingBlock != null ? block.mergingBlock.Position : block.node.Position;
+                sequence.Insert(0, block.transform.DOMove(movePoint, _travelTime));
             }
-            
-            GameManager.Instance.SetState(GameState.SpawningBlocks);
+
+            sequence.OnComplete(() =>
+            {
+                foreach (var block in orderedBlocks.Where(b => b.mergingBlock != null))
+                {
+                    MergeBlocks(block, block.mergingBlock);
+                }
+
+                GameManager.Instance.SetState(GameState.SpawningBlocks);
+            });
         }
 
         private void MergeBlocks(Block baseBlock, Block mergingBlock)

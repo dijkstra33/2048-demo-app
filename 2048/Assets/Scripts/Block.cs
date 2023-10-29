@@ -11,7 +11,7 @@ namespace Game
         [SerializeField]
         private TextMeshPro _valueText;
 
-        public Vector3 Position => transform.position;
+        public Vector2 Position => transform.position;
 
         public Node node;
 
