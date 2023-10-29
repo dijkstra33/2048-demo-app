@@ -10,12 +10,26 @@ namespace Game
         [SerializeField]
         private GridManager _gridManager;
 
+        [SerializeField]
+        private InputManager _inputManager;
+
         private GameState _state;
+        private int _round = 0;
 
         private void Awake()
         {
             Instance = this;
             SetState(GameState.GeneratingLevel);
+        }
+
+        private void Update()
+        {
+            if (_state != GameState.WaitingInput)
+            {
+                return;
+            }
+
+            _inputManager.TryToProcessInput();
         }
 
         public void SetState(GameState state)
@@ -24,10 +38,12 @@ namespace Game
             switch (state)
             {
                 case GameState.GeneratingLevel:
-                    _gridManager.GenerateGrid();
-                    _gridManager.SpawnBlocks(2);
+                    _gridManager.GenerateLevel();
                     break;
                 case GameState.SpawningBlocks:
+                    var blocksSpawnAmount = _round == 0 ? 2 : 1;
+                    _gridManager.SpawnBlocks(blocksSpawnAmount);
+                    _round++;
                     break;
                 case GameState.WaitingInput:
                     break;

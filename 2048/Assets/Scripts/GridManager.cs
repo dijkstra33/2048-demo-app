@@ -28,7 +28,12 @@ namespace Game
         [SerializeField]
         private float _fourSpawnChance;
 
-        private List<Node> _nodes = new();
+        public List<Node> Nodes => _nodes;
+        private readonly List<Node> _nodes = new();
+
+        public List<Block> Blocks => _blocks;
+        private readonly List<Block> _blocks = new();
+
         private Camera _mainCamera;
 
         private void Awake()
@@ -36,7 +41,13 @@ namespace Game
             _mainCamera = Camera.main;
         }
         
-        public void GenerateGrid()
+        public void GenerateLevel()
+        {
+            GenerateGrid();
+            GameManager.Instance.SetState(GameState.SpawningBlocks);
+        }
+        
+        private void GenerateGrid()
         {
             for (int x = 0; x < _width; x++)
             {
@@ -55,21 +66,42 @@ namespace Game
 
         public void SpawnBlocks(int amount)
         {
-            var freeNodes = _nodes.Where(n => n.occupiedBlock == null).ToArray();
-            for (int i = 0; i < Math.Min(amount, freeNodes.Length); i++)
+            var randomFreeNodes = 
+                _nodes
+                    .Where(n => n.occupiedBlock == null)
+                    .OrderBy(_ => UnityEngine.Random.value)
+                    .ToArray();
+
+            for (int i = 0; i < Math.Min(amount, randomFreeNodes.Length); i++)
             {
-                var freeNode = freeNodes[i];
-                var block = Instantiate(_blockPrefab, freeNode.GetPosition(), Quaternion.identity, transform);
-                var randomValue = UnityEngine.Random.Range(0f, 1f) > _fourSpawnChance ? 2 : 4;
-                var blockType = GetBlockTypeByValue(randomValue);
-                block.Init(blockType);
-                freeNode.occupiedBlock = block;
+                var freeNode = randomFreeNodes[i];
+                var randomValue = UnityEngine.Random.value > _fourSpawnChance ? 2 : 4;
+                SpawnBlock(freeNode, randomValue);
             }
 
-            if (freeNodes.Length <= amount)
+            if (randomFreeNodes.Length <= amount)
             {
                 GameManager.Instance.SetState(GameState.Lose);
+                return;
             }
+            
+            GameManager.Instance.SetState(GameState.WaitingInput);
+        }
+
+        public void SpawnBlock(Node node, int value)
+        {
+            var block = Instantiate(_blockPrefab, node.Position, Quaternion.identity, transform);
+            var blockType = GetBlockTypeByValue(value);
+            block.Init(blockType);
+            block.node = node;
+            node.occupiedBlock = block;
+            _blocks.Add(block);
+        }
+        
+        public void RemoveBlock(Block block)
+        {
+            _blocks.Remove(block);
+            Destroy(block.gameObject);
         }
 
         private BlockType GetBlockTypeByValue(int value)

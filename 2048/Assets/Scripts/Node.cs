@@ -8,6 +8,6 @@ namespace Game
         [NonSerialized]
         public Block occupiedBlock;
 
-        public Vector3 GetPosition() => transform.position;
+        public Vector2 Position => transform.position;
     }
 }
