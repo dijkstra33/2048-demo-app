@@ -13,9 +13,14 @@ namespace Game
             GameManager.Instance.SetState(GameState.Moving);
             var orderedBlocks =
                 _gridManager.Blocks
-                    .OrderBy(b => direction.x > 0 ? b.Position.x : -b.Position.x)
-                    .ThenBy(b => direction.y > 0 ? b.Position.y : -b.Position.y)
+                    .OrderBy(b => b.Position.x)
+                    .ThenBy(b => b.Position.y)
                     .ToArray();
+
+            if (direction.x < 0 || direction.y < 0)
+            {
+                orderedBlocks = orderedBlocks.Reverse().ToArray();
+            }
 
             foreach (var block in orderedBlocks)
             {
@@ -51,7 +56,7 @@ namespace Game
 
         private void MergeBlocks(Block baseBlock, Block mergingBlock)
         {
-            _gridManager.SpawnBlock(baseBlock.node, baseBlock.Value * 2);
+            _gridManager.SpawnBlock(mergingBlock.node, baseBlock.Value * 2);
             _gridManager.RemoveBlock(baseBlock);
             _gridManager.RemoveBlock(mergingBlock);
         }

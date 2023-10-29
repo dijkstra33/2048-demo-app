@@ -79,13 +79,7 @@ namespace Game
                 SpawnBlock(freeNode, randomValue);
             }
 
-            if (randomFreeNodes.Length <= amount)
-            {
-                GameManager.Instance.SetState(GameState.Lose);
-                return;
-            }
-            
-            GameManager.Instance.SetState(GameState.WaitingInput);
+            GameManager.Instance.SetState(GameState.CheckEndGameConditions);
         }
 
         public void SpawnBlock(Node node, int value)

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -12,6 +13,12 @@ namespace Game
 
         [SerializeField]
         private InputManager _inputManager;
+        
+        [SerializeField]
+        private UIManager _uiManager;
+
+        [SerializeField]
+        private int _winCondition;
 
         private GameState _state;
         private int _round = 0;
@@ -46,16 +53,37 @@ namespace Game
                     _round++;
                     break;
                 case GameState.WaitingInput:
-                    break;
                 case GameState.Moving:
                     break;
+                case GameState.CheckEndGameConditions:
+                    CheckEndGameConditions();
+                    break;
                 case GameState.Win:
+                    _uiManager.ShowWinScreen();
                     break;
                 case GameState.Lose:
+                    _uiManager.ShowLoseScreen();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+        }
+
+        private void CheckEndGameConditions()
+        {
+            if (_gridManager.Nodes.All(n => n.occupiedBlock != null))
+            {
+                SetState(GameState.Lose);
+                return;
+            }
+
+            if (_gridManager.Blocks.Any(b => b.Value == _winCondition))
+            {
+                SetState(GameState.Win);
+                return;
+            }
+
+            SetState(GameState.WaitingInput);
         }
     }
 }

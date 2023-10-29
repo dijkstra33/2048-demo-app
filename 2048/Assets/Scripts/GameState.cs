@@ -6,6 +6,7 @@
         SpawningBlocks,
         WaitingInput,
         Moving,
+        CheckEndGameConditions,
         Win,
         Lose,
     }
