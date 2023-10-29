@@ -443,5 +443,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 4
   _height: 4
-  _gridCellPrefab: {fileID: 4670470832874240102, guid: 6ec823d3bef93a748952c256f8fb3f5c, type: 3}
+  _nodePrefab: {fileID: 5438843337411077081, guid: 6ec823d3bef93a748952c256f8fb3f5c, type: 3}
   _boardPrefab: {fileID: 8794588189873786609, guid: 8de6b2caaccf9fc4a93b1a5e69299a17, type: 3}
+  _blockPrefab: {fileID: 7107802236673065462, guid: bb84944943839704baa8b0c1865b4589, type: 3}
+  _blockTypes:
+  - _value: 2
+    _color: {r: 0.6073694, g: 0.059398327, b: 0.6698113, a: 1}
+  - _value: 4
+    _color: {r: 0.4895158, g: 0.9716981, b: 0.53002447, a: 1}
+  - _value: 8
+    _color: {r: 0.23058024, g: 0.8461615, b: 0.9622642, a: 1}
+  - _value: 16
+    _color: {r: 0.08707432, g: 0.044125997, b: 0.6320754, a: 1}
+  - _value: 32
+    _color: {r: 0.8301887, g: 0.38922322, b: 0.042292565, a: 1}
+  - _value: 64
+    _color: {r: 0.4134635, g: 0.055535767, b: 0.5660378, a: 1}
+  - _value: 128
+    _color: {r: 0.4716981, g: 0.46902812, b: 0.46902812, a: 1}
+  - _value: 256
+    _color: {r: 0.8301887, g: 0.7354665, b: 0.19893196, a: 1}
+  - _value: 512
+    _color: {r: 0.4433962, g: 0.11959156, b: 0.06860089, a: 1}
+  - _value: 1024
+    _color: {r: 0.8867924, g: 0.12046986, b: 0.4179324, a: 1}
+  - _value: 2048
+    _color: {r: 0.807818, g: 0.9622642, b: 0.23965822, a: 1}
+  _fourSpawnChance: 0.2

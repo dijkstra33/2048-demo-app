@@ -25,6 +25,7 @@ namespace Game
             {
                 case GameState.GeneratingLevel:
                     _gridManager.GenerateGrid();
+                    _gridManager.SpawnBlocks(2);
                     break;
                 case GameState.SpawningBlocks:
                     break;

@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4670470832874240100}
+  - component: {fileID: 5438843337411077081}
   - component: {fileID: 4670470832874240103}
   m_Layer: 0
-  m_Name: GridCell
+  m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5438843337411077081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670470832874240102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e56072e7d346e3bbba22b824f3d249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occupiedBlock: {fileID: 0}
 --- !u!212 &4670470832874240103
 SpriteRenderer:
   m_ObjectHideFlags: 0
