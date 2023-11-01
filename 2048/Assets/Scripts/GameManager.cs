@@ -26,6 +26,10 @@ namespace Game
         private void Awake()
         {
             Instance = this;
+        }
+
+        private void Start()
+        {
             SetState(GameState.GeneratingLevel);
         }
 
