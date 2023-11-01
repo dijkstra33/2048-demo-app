@@ -17,6 +17,7 @@ namespace Game
         [SerializeField]
         private UIManager _uiManager;
 
+        public int WinCondition => _winCondition;
         [SerializeField]
         private int _winCondition;
 
