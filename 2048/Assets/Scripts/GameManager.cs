@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -10,9 +11,6 @@ namespace Game
 
         [SerializeField]
         private GridManager _gridManager;
-
-        [SerializeField]
-        private InputManager _inputManager;
         
         [SerializeField]
         private UIManager _uiManager;
@@ -21,6 +19,7 @@ namespace Game
         [SerializeField]
         private int _winCondition;
 
+        public GameState State => _state;
         private GameState _state;
         private int _round = 0;
 
@@ -32,16 +31,6 @@ namespace Game
         private void Start()
         {
             SetState(GameState.GeneratingLevel);
-        }
-
-        private void Update()
-        {
-            if (_state != GameState.WaitingInput)
-            {
-                return;
-            }
-
-            _inputManager.TryToProcessInput();
         }
 
         public void SetState(GameState state)
@@ -89,6 +78,12 @@ namespace Game
             }
 
             SetState(GameState.WaitingInput);
+        }
+
+        public void ReloadGame()
+        {
+            var activeScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(activeScene.name);
         }
     }
 }

@@ -13,6 +13,9 @@ namespace Game
         
         [SerializeField]
         private GameObject _loseScreen;
+        
+        [SerializeField]
+        private GameObject _pressAnyKeyToRestratText;
 
         private void Start()
         {
@@ -22,11 +25,13 @@ namespace Game
         public void ShowWinScreen()
         {
             _winScreen.SetActive(true);
+            _pressAnyKeyToRestratText.SetActive(true);
         }
         
         public void ShowLoseScreen()
         {
             _loseScreen.SetActive(true);
+            _pressAnyKeyToRestratText.SetActive(true);
         }
     }
 }
